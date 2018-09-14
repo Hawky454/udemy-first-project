@@ -6,31 +6,43 @@ import Person from './Person/Person';
 class App extends Component {
   state = {
     persons: [
-      {name: 'Dave', age: 38},
-      {name: 'Davina', age: 34},
-      {name: 'Luke', age: 40}
+      { id: '0000', name: 'Dave', age: 38},
+      { id: '0001', name: 'Davina', age: 34},
+      { id: '0002', name: 'Luke', age: 40},
+      { id: '0003', name: 'Test', age: 1212}
     ],
     showPersons: false
   }
 
-  handleClick = (newName) => {
+
+
+  deletePersonHandler = (personIndex) => {
+    //!const persons = this.state.persons.slice(); this essentially fetches the persons array and we use slice so it starts a new array. the best way to do this is bellow with the spread operator:
+    const persons = [...this.state.persons]
+    persons.splice(personIndex, 1); //!this will be passed index from map() and will determine wich index to delete & setState updates the state. 
     this.setState({
-      persons: [
-        {name: newName, age: 38},
-        {name: 'Davina', age: 35},
-        {name: 'Luke', age: 40}
-      ]
-      
+      persons: persons
     });
   }
 
-  nameChangedHandler = (event) => {
+  nameChangedHandler = (event, id) => {
+    const personIndex = this.state.persons.findIndex(person => {
+      return person.id === id;
+    });
+
+    // const person = this.state.persons[personIndex]; better approach below:
+
+    const person = {
+      ...this.state.persons[personIndex]
+    };
+
+    person.name = event.target.value;
+
+    const persons = [...this.state.persons];
+    persons[personIndex] = person;
+
     this.setState({
-      persons: [
-        {name: 'Dave', age: 38},
-        {name: event.target.value, age: 34},
-        {name: 'Luke', age: 40}
-      ]
+      persons: persons
     });
   }
 
@@ -60,18 +72,16 @@ class App extends Component {
     if(this.state.showPersons) {
       persons = (
         <div>
-            <Person 
-              name={this.state.persons[0].name} 
-              age={this.state.persons[0].age}/>
-            <Person 
-              name={this.state.persons[1].name} 
-              age={this.state.persons[1].age}
-              clicked={this.handleClick.bind(this, ' Bibbidy Bibbidy Bop!')}
-              changed={this.nameChangedHandler}>My Hobbies: Gym!</Person>
-            <Person 
-              name={this.state.persons[2].name} 
-              age={this.state.persons[2].age}/>
-          </div> 
+            {this.state.persons.map((person, index) => {
+              return  <Person 
+                delete={() => this.deletePersonHandler(index)} //adding an index as arg it lets us know which index to delete
+                name={person.name}
+                age={person.age}
+                key={person.id} //instead of index, adding an id to the original state is a good idear.
+                changed={(event) => this.nameChangedHandler(event, person.id)}
+                />
+            })}
+        </div> 
       );
     }
 
