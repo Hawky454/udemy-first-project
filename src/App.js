@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
+// import Radium, { StyleRoot } from 'radium';
+
 
 
 class App extends Component {
@@ -11,13 +13,14 @@ class App extends Component {
       { id: '0002', name: 'Luke', age: 40},
       { id: '0003', name: 'Test', age: 1212}
     ],
-    showPersons: false
+    showPersons: false,
+    inputText: ''
   }
 
 
 
   deletePersonHandler = (personIndex) => {
-    //!const persons = this.state.persons.slice(); this essentially fetches the persons array and we use slice so it starts a new array. the best way to do this is bellow with the spread operator:
+    //!const persons = this.state.persons.slice(); this essentially fetches the persons array and we use slice so it starts a new array. the best way to do this is below with the spread operator:
     const persons = [...this.state.persons]
     persons.splice(personIndex, 1); //!this will be passed index from map() and will determine wich index to delete & setState updates the state. 
     this.setState({
@@ -29,18 +32,14 @@ class App extends Component {
     const personIndex = this.state.persons.findIndex(person => {
       return person.id === id;
     });
-
     // const person = this.state.persons[personIndex]; better approach below:
-
     const person = {
       ...this.state.persons[personIndex]
     };
 
     person.name = event.target.value;
-
     const persons = [...this.state.persons];
     persons[personIndex] = person;
-
     this.setState({
       persons: persons
     });
@@ -54,6 +53,12 @@ class App extends Component {
     })
   }
 
+  handleChangeInput = (event) => {
+    this.setState({
+      inputText: event.target.value
+    })
+  }
+
 
   render() {
     //! Inline styles:
@@ -62,8 +67,13 @@ class App extends Component {
       height: 50,
       fontSize: 20,
       borderRadius: 5,
-      background: 'floralwhite',
-      margin: 30
+      backgroundColor: 'green',
+      color: 'white',
+      margin: 30,
+      ':hover': {
+        backgroundColor: 'lightgreen',
+        color: 'black'
+      }
     }
     //! End of Inline styles
 
@@ -83,18 +93,35 @@ class App extends Component {
             })}
         </div> 
       );
+      buttonStyle.backgroundColor = 'red';
+    }
+
+    //!Going to set the style of <p> dynamically
+    let classes = [];
+    if(this.state.persons.length <= 2) {
+     classes.push('red');
+    }
+    if(this.state.persons.length <= 1) {
+      classes.push('bold');
     }
 
     return (
+      // <StyleRoot>
       <div className="App">
-      <h1>Hi, I'm a React App</h1>
-      <p>This is really working, meow!</p>
-      <button 
-      style={buttonStyle}
-      onClick={this.togglePersonsHandler}>Toggle Persons</button>
-      {persons} {/*This will display the above <div>'s with <Person />'s if true, displays nothing if false!*/}
+        <h1>Vid Trent & His Delerium Site</h1>
+        <p className={classes.join(' ')}>How ya like me meow!</p>
+        <button 
+          style={buttonStyle}
+          onClick={this.togglePersonsHandler}>Toggle Persons</button>
+        <input 
+          className="appInput" 
+          onChange={this.handleChangeInput}
+          length={this.state.inputText.length}
+          />
+          <p>{this.state.inputText}</p>
+        {persons} {/*This will display the above <div>'s with <Person />'s if true, displays nothing if false!*/}
       </div>
-
+    // </StyleRoot>
     );
   }
 }
