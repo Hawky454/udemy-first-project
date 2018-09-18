@@ -8,7 +8,7 @@ const Person = (props) => {
 
     return(
         <div
-        className={classes.Person}>
+          className={classes.Person}>
           <p 
             onClick={props.delete}>I'm {props.name} and I am {props.age} years old! (pssst, I am the person component)</p>
           <p>{props.children}</p>
