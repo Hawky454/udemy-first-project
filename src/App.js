@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import './App.css';
+import classes from './App.css';
 import Person from './Person/Person';
 // import Radium, { StyleRoot } from 'radium';
+
 
 
 
@@ -61,23 +62,8 @@ class App extends Component {
 
 
   render() {
-    //! Inline styles:
-    const buttonStyle = {
-      width: 150,
-      height: 50,
-      fontSize: 20,
-      borderRadius: 5,
-      backgroundColor: 'green',
-      color: 'white',
-      margin: 30,
-      ':hover': {
-        backgroundColor: 'lightgreen',
-        color: 'black'
-      }
-    }
-    //! End of Inline styles
-
     let persons = null;
+    let btnClass = null;
 
     if(this.state.showPersons) {
       persons = (
@@ -93,28 +79,28 @@ class App extends Component {
             })}
         </div> 
       );
-      buttonStyle.backgroundColor = 'red';
+      btnClass = classes.Red;
     }
 
     //!Going to set the style of <p> dynamically
-    let classes = [];
+    let assignedClasses = [];
     if(this.state.persons.length <= 2) {
-     classes.push('red');
+      assignedClasses.push(classes.red);
     }
     if(this.state.persons.length <= 1) {
-      classes.push('bold');
+      assignedClasses.push(classes.bold);
     }
 
     return (
       // <StyleRoot>
-      <div className="App">
-        <h1>Vid Trent & His Delerium Site</h1>
-        <p className={classes.join(' ')}>How ya like me meow!</p>
-        <button 
-          style={buttonStyle}
+      <div className={classes.App}>
+        <h1>Vid Trent & His Delerium Tremens</h1>
+        <p className={assignedClasses.join(' ')}>How ya like me meow!</p>
+        <button
+          className={btnClass} 
           onClick={this.togglePersonsHandler}>Toggle Persons</button>
         <input 
-          className="appInput" 
+          className={classes.appInput} 
           onChange={this.handleChangeInput}
           length={this.state.inputText.length}
           />

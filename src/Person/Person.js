@@ -1,23 +1,21 @@
 import React from 'react';
-import './Person.css';
+import classes from './Person.css';
 
 
 
 
-const Person = (props) => {
-
-
+const Person = (props) => { 
 
     return(
         <div
-        className="Person">
+        className={classes.Person}>
           <p 
             onClick={props.delete}>I'm {props.name} and I am {props.age} years old! (pssst, I am the person component)</p>
           <p>{props.children}</p>
           <input 
             value={props.name}
             onChange={props.changed}
-            className="input"
+            className={classes.input}
             type="text" />
         </div>
     );
