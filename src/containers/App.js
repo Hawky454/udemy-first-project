@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import classes from './App.css';
-import Person from '../components/Person/Person';
+import PersonList from '../components/Persons/PersonList';
 // import Radium, { StyleRoot } from 'radium';
+// import Person from '../components/Persons/Person/Person';
+import Cockpit from '../components/Cockpit/Cockpit';
+
+
 
 
 
@@ -27,6 +31,7 @@ class App extends Component {
     this.setState({
       persons: persons
     });
+    console.log(this.state);
   }
 
   nameChangedHandler = (event, id) => {
@@ -62,50 +67,34 @@ class App extends Component {
 
 
   render() {
-    let persons = null;
-    let btnClass = null;
-
+    let persons = false;
+    
+    console.log('persons: (put here by davidJohnMiller', persons);
+    //!if true, show this...
     if(this.state.showPersons) {
-      persons = (
-        <div>
-            {this.state.persons.map((person, index) => {
-              return  <Person 
-                delete={() => this.deletePersonHandler(index)} //adding an index as arg it lets us know which index to delete
-                name={person.name}
-                age={person.age}
-                key={person.id} //instead of index, adding an id to the original state is a good idear.
-                changed={(event) => this.nameChangedHandler(event, person.id)}
-                />
-            })}
-        </div> 
-      );
-      btnClass = classes.Red;
+      persons = <PersonList
+              persons={this.state.persons}
+              delete={this.deletePersonHandler}
+              changed={this.nameChangedHandler}/>;
+      console.log('persons: (put here by davidJohnMiller', persons);
     }
 
-    //!Going to set the style of <p> dynamically
-    let assignedClasses = [];
-    if(this.state.persons.length <= 2) {
-      assignedClasses.push(classes.red);
-    }
-    if(this.state.persons.length <= 1) {
-      assignedClasses.push(classes.bold);
-    }
-
+    
     return (
       // <StyleRoot>
       <div className={classes.App}>
-        <h1>Vid Trent & His Delerium Tremens</h1>
-        <p className={assignedClasses.join(' ')}>How ya like me meow!</p>
-        <button
-          className={btnClass} 
-          onClick={this.togglePersonsHandler}>Toggle Persons</button>
+        <Cockpit 
+          showPersons={this.state.showPersons}
+          persons={this.state.persons}
+          clicked={this.togglePersonsHandler}
+        />
         <input 
           className={classes.appInput} 
           onChange={this.handleChangeInput}
           length={this.state.inputText.length}
           />
           <p>{this.state.inputText}</p>
-        {persons} {/*This will display the above <div>'s with <Person />'s if true, displays nothing if false!*/}
+        {persons} {/*! show this if false! meaning it will show nothing.*/}
       </div>
     // </StyleRoot>
     );
