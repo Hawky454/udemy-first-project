@@ -4,6 +4,7 @@ import PersonList from '../components/Persons/PersonList';
 // import Radium, { StyleRoot } from 'radium';
 // import Person from '../components/Persons/Person/Person';
 import Cockpit from '../components/Cockpit/Cockpit';
+import TestInput from '../components/TestInput/TestInput';
 
 
 
@@ -81,22 +82,20 @@ class App extends Component {
 
     
     return (
-      // <StyleRoot>
       <div className={classes.App}>
         <Cockpit 
           showPersons={this.state.showPersons}
           persons={this.state.persons}
           clicked={this.togglePersonsHandler}
         />
-        <input 
-          className={classes.appInput} 
-          onChange={this.handleChangeInput}
+        <TestInput 
+          passingAlongClassName={classes.appInput}
+          changeThisBiatch={this.handleChangeInput}
           length={this.state.inputText.length}
-          />
-          <p>{this.state.inputText}</p>
+          inputText={this.state.inputText}
+        />
         {persons} {/*! show this if false! meaning it will show nothing.*/}
       </div>
-    // </StyleRoot>
     );
   }
 }
