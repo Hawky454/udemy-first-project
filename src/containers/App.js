@@ -1,18 +1,19 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import classes from './App.css';
 import PersonList from '../components/Persons/PersonList';
 // import Radium, { StyleRoot } from 'radium';
 // import Person from '../components/Persons/Person/Person';
 import Cockpit from '../components/Cockpit/Cockpit';
 import TestInput from '../components/TestInput/TestInput';
+// import Footer from '../components/Footer/Footer';
+import WithClass from '../hoc/WithClass';
 
 
 
 
 
 
-
-class App extends Component {
+class App extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,19 +27,6 @@ class App extends Component {
       inputText: ''
     }
   }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    console.log('[UPDATE App.js] Inside shouldComponentUpdate()', nextProps, nextState);
-    
-    return nextState.persons !== this.state.persons || nextState.showPersons !== this.state.showPersons;
-   
-  }
-
-
- 
-  
-
-
 
   deletePersonHandler = (personIndex) => {
     //!const persons = this.state.persons.slice(); this essentially fetches the persons array and we use slice so it starts a new array. the best way to do this is below with the spread operator:
@@ -95,7 +83,7 @@ class App extends Component {
 
     
     return (
-      <div className={classes.App}>
+      <WithClass passOnClasses={classes.App}>
         <button 
           onClick={() => {this.setState({showPersons: true})}}>Show Persons</button>
         <Cockpit 
@@ -111,7 +99,8 @@ class App extends Component {
           inputText={this.state.inputText}
         />
         {persons} {/*! show this if false! meaning it will show nothing.*/}
-      </div>
+      {/* <Footer /> */}
+      </WithClass>
     );
   }
 }

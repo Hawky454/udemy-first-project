@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Person from './Person/Person';
 
 
 
 //! when using props in a class component you have to call it by using this.
-class PersonList extends Component{
+class PersonList extends PureComponent{
 
     constructor(props) {
         super(props);

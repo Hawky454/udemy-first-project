@@ -1,13 +1,14 @@
 import React from 'react';
 import classes from './Cockpit.css';
+import Aux from '../../hoc/Aux';
 
 const Cockpit = (props) => {
     //!Going to set the style of <p> dynamically
     const assignedClasses = [];
-    let btnClass = '';
+    let btnClass = classes.Button;
 
     if(props.showPersons) {
-        btnClass = classes.Red;
+        btnClass = [classes.Button, classes.Red].join(' ');
     }
 
     if(props.persons.length <= 2) {
@@ -18,7 +19,7 @@ const Cockpit = (props) => {
     }
 
     return(
-        <div className={classes.Cockpit}>
+        <Aux>
             <h1>{props.appTitle}</h1>
 
             <p 
@@ -26,7 +27,7 @@ const Cockpit = (props) => {
             <button
               className={btnClass} 
               onClick={props.clicked}>Toggle Persons</button>
-        </div>
+        </Aux>
         );
 }
 

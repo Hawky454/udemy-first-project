@@ -7,7 +7,7 @@
   }
   
   
-  .Cockpit button {
+  .Button {
       width: 150px;
       height: 50px;
       font-size: 20px;
@@ -19,16 +19,16 @@
       cursor: pointer;
   }
   
-  .Cockpit button:hover {
+  .Button:hover {
     background-color: lightgreen;
     color: black;
   }
   
-  .Cockpit button.Red {
+  .Button.Red {
     background-color: red;
   }
   
-  .Cockpit button.Red:hover {
+  .Button.Red:hover {
     background-color: salmon;
     color: black;
   }
