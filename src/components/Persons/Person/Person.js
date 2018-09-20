@@ -1,24 +1,30 @@
-import React from 'react';
+import React, { Component } from 'react';
 import classes from './Person.css';
 
 
 
+//! when using props in a class component you have to call it by using this.
+class Person extends Component { 
 
-const Person = (props) => { 
+
+
+    render() {
+        
 
     return(
         <div
           className={classes.Person}>
           <p 
-            onClick={props.deleteThis}>I'm {props.name} and I am {props.age} years old! (pssst, I am the person component)</p>
-          <p>{props.children}</p>
+            onClick={this.props.deleteThis}>I'm {this.props.name} and I am {this.props.age} years old! (pssst, I am the person component)</p>
+          <p>{this.props.children}</p>
           <input 
-            value={props.name}
-            onChange={props.changed}
+            value={this.props.name}
+            onChange={this.props.changed}
             className={classes.input}
             type="text" />
         </div>
     );
+  }
 }; 
         
 export default Person;

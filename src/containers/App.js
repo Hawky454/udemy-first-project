@@ -11,17 +11,32 @@ import TestInput from '../components/TestInput/TestInput';
 
 
 
+
 class App extends Component {
-  state = {
-    persons: [
-      { id: '0000', name: 'Dave', age: 38},
-      { id: '0001', name: 'Davina', age: 34},
-      { id: '0002', name: 'Luke', age: 40},
-      { id: '0003', name: 'Test', age: 1212}
-    ],
-    showPersons: false,
-    inputText: ''
+  constructor(props) {
+    super(props);
+    this.state = {
+      persons: [
+        { id: '0000', name: 'Dave', age: 38},
+        { id: '0001', name: 'Davina', age: 34},
+        { id: '0002', name: 'Luke', age: 40},
+        { id: '0003', name: 'Test', age: 1212}
+      ],
+      showPersons: false,
+      inputText: ''
+    }
   }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('[UPDATE App.js] Inside shouldComponentUpdate()', nextProps, nextState);
+    
+    return nextState.persons !== this.state.persons || nextState.showPersons !== this.state.showPersons;
+   
+  }
+
+
+ 
+  
 
 
 
@@ -32,7 +47,7 @@ class App extends Component {
     this.setState({
       persons: persons
     });
-    console.log(this.state);
+    // console.log(this.state);
   }
 
   nameChangedHandler = (event, id) => {
@@ -53,7 +68,7 @@ class App extends Component {
   }
 
   togglePersonsHandler = () => {
-    //!This is how ya get it to toggle back n forth! This is fucking good stuff man 9-13-18
+    //!This is how ya get it to toggle back n forth!
     const doesShow = this.state.showPersons;
     this.setState({
       showPersons: !doesShow
@@ -68,22 +83,23 @@ class App extends Component {
 
 
   render() {
+    console.log('[App.js] Inside render');
     let persons = false;
-    
-    console.log('persons: (put here by davidJohnMiller', persons);
     //!if true, show this...
     if(this.state.showPersons) {
       persons = <PersonList
               persons={this.state.persons}
               delete={this.deletePersonHandler}
               changed={this.nameChangedHandler}/>;
-      console.log('persons: (put here by davidJohnMiller', persons);
     }
 
     
     return (
       <div className={classes.App}>
+        <button 
+          onClick={() => {this.setState({showPersons: true})}}>Show Persons</button>
         <Cockpit 
+          appTitle={this.props.title}
           showPersons={this.state.showPersons}
           persons={this.state.persons}
           clicked={this.togglePersonsHandler}

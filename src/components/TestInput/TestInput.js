@@ -1,7 +1,17 @@
 import React from 'react';
 import classes from './TestInput.css';
 
+
 const TestInput = (props) => {
+
+    let colorz = '';
+
+        if(props.length <= 50) {
+            colorz = 'green';
+        } else {
+            colorz = 'red';
+        }
+
     return (
       <div>
         <p>Play around with typing below, go on, do it... IT'S FUN!!!!</p>
@@ -10,7 +20,7 @@ const TestInput = (props) => {
           onChange={props.changeThisBiatch}
       />
         <p>{props.length}</p>
-        <p className={classes.p}>{props.inputText}</p>
+        <p className={classes.p} style={{color: colorz}}>{props.inputText}</p>
     </div>
   );
 }
