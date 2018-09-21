@@ -26,7 +26,7 @@ class Person extends Component {
     return(
         <WithClass
           passOnClasses={classes.Person}>
-          {this.props.authenticated ? <p>I'm authenticated</p> : ''}
+          {this.props.authenticated ? <p>I'm authenticated</p> : null}
           <p onClick={this.props.deleteThis}>I'm {this.props.name} and I am {this.props.age} years old! (pssst, I am the person component)</p>
           <p>{this.props.children}</p>
           <input

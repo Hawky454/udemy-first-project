@@ -11,8 +11,6 @@ import WithClass from '../hoc/WithClass';
 
 
 
-
-
 class App extends PureComponent {
   constructor(props) {
     super(props);

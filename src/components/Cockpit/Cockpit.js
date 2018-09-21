@@ -2,10 +2,13 @@ import React from 'react';
 import classes from './Cockpit.css';
 import Aux from '../../hoc/Aux';
 
+
+
 const Cockpit = (props) => {
     //!Going to set the style of <p> dynamically
     const assignedClasses = [];
     let btnClass = classes.Button;
+
 
     if(props.showPersons) {
         btnClass = [classes.Button, classes.Red].join(' ');
@@ -21,7 +24,6 @@ const Cockpit = (props) => {
     return(
         <Aux>
             <h1>{props.appTitle}</h1>
-
             <p 
               className={assignedClasses.join(' ')}>How ya like me meow!</p>
             <button
