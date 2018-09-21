@@ -24,13 +24,17 @@ class App extends PureComponent {
         { id: '0003', name: 'Test', age: 1212}
       ],
       showPersons: false,
-      inputText: ''
+      inputText: '',
+      toggleCounter: 0,
+      authenticated: false
     }
   }
 
   deletePersonHandler = (personIndex) => {
     //!const persons = this.state.persons.slice(); this essentially fetches the persons array and we use slice so it starts a new array. the best way to do this is below with the spread operator:
-    const persons = [...this.state.persons]
+    // const persons = [...this.state.persons]
+    const persons = this.state.persons.slice();
+    console.log(persons);
     persons.splice(personIndex, 1); //!this will be passed index from map() and will determine wich index to delete & setState updates the state. 
     this.setState({
       persons: persons
@@ -57,17 +61,31 @@ class App extends PureComponent {
 
   togglePersonsHandler = () => {
     //!This is how ya get it to toggle back n forth!
+    //!To update the state in this manner is very tricky but it's the proper way. Look closely at this.
     const doesShow = this.state.showPersons;
-    this.setState({
-      showPersons: !doesShow
-    })
+    this.setState( (prevState, props) => {
+      return {
+        showPersons: !doesShow,
+        toggleCounter: prevState.toggleCounter +1
+      }
+    });
   }
+
+
 
   handleChangeInput = (event) => {
     this.setState({
       inputText: event.target.value
     })
   }
+
+  loginHandler = () => {
+    this.setState({
+      authenticated: true
+    })
+  }
+
+
 
 
   render() {
@@ -78,7 +96,9 @@ class App extends PureComponent {
       persons = <PersonList
               persons={this.state.persons}
               delete={this.deletePersonHandler}
-              changed={this.nameChangedHandler}/>;
+              changed={this.nameChangedHandler}
+              isAuthenticated={this.state.authenticated}
+              />;
     }
 
     
@@ -86,11 +106,13 @@ class App extends PureComponent {
       <WithClass passOnClasses={classes.App}>
         <button 
           onClick={() => {this.setState({showPersons: true})}}>Show Persons</button>
-        <Cockpit 
+        <Cockpit
+          toggleClicked={this.state.toggleCounter} 
           appTitle={this.props.title}
           showPersons={this.state.showPersons}
           persons={this.state.persons}
           clicked={this.togglePersonsHandler}
+          login={this.loginHandler}
         />
         <TestInput 
           passingAlongClassName={classes.appInput}

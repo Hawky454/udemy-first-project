@@ -9,6 +9,11 @@ class PersonList extends PureComponent{
     constructor(props) {
         super(props);
         console.log('[PersonList.js] Inside Constructor', props);
+        this.lastPersonRef = React.createRef();
+      }
+
+      componentDidMount() {
+
       }
     
    
@@ -18,10 +23,13 @@ class PersonList extends PureComponent{
             this.props.persons.map((person, index) => {
                 return <Person 
                     deleteThis={() => this.props.delete(index)}
+                    position={index}
                     name={person.name}
                     age={person.age}
                     key={person.id}
-                    changed={(event) => this.props.changed(event, person.id)} />
+                    changed={(event) => this.props.changed(event, person.id)} 
+                    authenticated={this.props.isAuthenticated}
+                    />
             })
         );
     }
